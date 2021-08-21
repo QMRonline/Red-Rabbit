@@ -1,0 +1,102 @@
+Download, Install & Run RedRabbit
+We're going to download the RedRabbit PowerShell script as plaintext directly from securethelog's GitHub page for RedRabbit. To download RedRabbit and run the script without ever having to save it on the hard disk, we use the "Invoke-Expression" (iex for short) command. RedRabbit should immediately run after this.
+
+C:\> $url = "https://raw.githubusercontent.com/securethelogs/RedRabbit/master/redrabbit.ps1"
+C:\> iex(New-Object Net.WebClient).DownloadString($url)
+You could also shorten that to one line if you want:
+
+C:\> iex(New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/securethelogs/RedRabbit/master/redrabbit.ps1")
+If, for some reason, you'd like to download and save the script, go ahead and use the code below instead. It will save the PowerShell script in your chosen location, but it won't open it up automatically.
+
+Use RedRabbit
+As soon as you run the tool, you should be greeted by RedRabbit's logo and options menu, as seen below. We're going to check out a few of these options to see how they work. A full description of each option can be found on securethelog's website.
+
+██▀███  ▓█████ ▓█████▄  ██▀███   ▄▄▄       ▄▄▄▄    ▄▄▄▄    ██▓▄▄▄█████▓                 \\\,_
+▓██ ▒ ██▒▓█   ▀ ▒██▀ ██▌▓██ ▒ ██▒▒████▄    ▓█████▄ ▓█████▄ ▓██▒▓  ██▒ ▓▒                  \` ,\
+▓██ ░▄█ ▒▒███   ░██   █▌▓██ ░▄█ ▒▒██  ▀█▄  ▒██▒ ▄██▒██▒ ▄██▒██▒▒ ▓██░ ▒░             __,.-" =__)
+▒██▀▀█▄  ▒▓█  ▄ ░▓█▄   ▌▒██▀▀█▄  ░██▄▄▄▄██ ▒██░█▀  ▒██░█▀  ░██░░ ▓██▓ ░           ."        )
+░██▓ ▒██▒░▒████▒░▒████▓ ░██▓ ▒██▒ ▓█   ▓██▒░▓█  ▀█▓░▓█  ▀█▓░██░  ▒██▒ ░        ,_/   ,    \/\_
+░ ▒▓ ░▒▓░░░ ▒░ ░ ▒▒▓  ▒ ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░░▒▓███▀▒░▒▓███▀▒░▓    ▒ ░░          \_|    )_-\ \_-`
+  ░▒ ░ ▒░ ░ ░  ░ ░ ▒  ▒   ░▒ ░ ▒░  ▒   ▒▒ ░▒░▒   ░ ▒░▒   ░  ▒ ░    ░
+  ░░   ░    ░    ░ ░  ░   ░░   ░   ░   ▒    ░    ░  ░    ░  ▒ ░  ░
+   ░        ░  ░   ░       ░           ░  ░ ░       ░       ░
+                 ░                               ░       ░
+Creator: https://securethelogs.com / @securethelogs
+
+Current User: timsacerlaptop\tim-laptop | Current Machine: TimsAcerLaptop
+Session Running As Admin: True!!   |  Is User Domain Admin: Computer In WORKGROUP, Cannot Query AD
+
+Please select one of the following:
+
+Option 1: Quick Recon                               Option 10: Password Extraction
+Option 2: Scan Subnet                               Option 11: Encode Commands (Base64)
+Option 3: Clipboard Logger                          Option 12: Run Encoded Commands (Base64)
+Option 4: Network Scanner                           Option 13: Edit Local Host (SMB Relay)
+Option 5: DNS Resolver                              Option 14: Probe For SMB Share
+Option 6: Brute Force ZIP                           Option 15: Web Crawler
+Option 7: Brute WinRM                               Option 16: File Crawler
+Option 8: Test Extraction Connection
+Option 9: Show Local Firewall Deny Rules
+
+ --- OSINT Options ----                             --- Cloud Options ----
+
+Option A: Find Subdomains                           Option Azure: Query Azure/AzureAD
+Option B: Daily PasteBin
+Option C: Scan Azure Resource
+Option D: Scan Socials For Usernames
+
+Option ::
+Quick Recon
+Let's take a look at the first option, "Quick Recon." Type 1 and then hit Enter. This displays a plethora of information, including system privilege constants such as process memory quotas (something that would be useful to know if, for instance, you wanted to perform a buffer-overflow attack).
+
+It also shows us the system accounts, which of those accounts have admin privileges, our current network status, installed programs, and the system's firewall rules, allowing us to identify potential vectors of attack.
+
+Option :: 1
+
+User: ****\****
+Hostname: ******
+
+GROUP INFORMATION
+-----------------
+Group Name                                                    Type             SID          Attributes
+============================================================= ================ ============ ===============================================================
+Everyone                                                      Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Local account and member of Administrators group Well-known group S-1-5-114    Mandatory group, Enabled by default, Enabled group
+BUILTIN\Administrators                                        Alias            S-1-5-32-544 Mandatory group, Enabled by default, Enabled group, Group owner
+...
+
+PRIVILEGES INFORMATION
+----------------------
+Privilege Name                            Description                                                        State
+========================================= ================================================================== ========
+SeIncreaseQuotaPrivilege                  Adjust memory quotas for a process                                 Disabled
+SeSecurityPrivilege                       Manage auditing and security log                                   Disabled
+...
+
+LOCAL USERS INFORMATION
+-----------------------
+User accounts for \\TIMSACERLAPTOP
+
+-------------------------------------------------------------------------------
+Administrator            DefaultAccount           Guest
+Squibble                 TheRealTim               Tim-Laptop
+WDAGUtilityAccount
+The command completed successfully.
+
+PROGRAM INFORMATION
+-------------------
+7-Zip
+Acer
+...
+WindowsPowerShell
+
+FIREWALL INFORMATION
+-------------------
+Name            DisplayName                DisplayGroup Protocol LocalPort RemotePort RemoteAddress Enabled         Profile Direction Action
+----            -----------                ------------ -------- --------- ---------- ------------- -------         ------- --------- ------
+SNMPTRAP-In-UDP SNMP Trap Service (UDP In) SNMP Trap    UDP      162       Any        LocalSubnet     False Private, Public   Inbound  Allow
+SNMPTRAP-In-... SNMP Trap Service (UDP In) SNMP Trap    UDP      162       Any        Any             False          Domain   Inbound  Allow
+WiFiDirect-K... WFD Driver-only (TCP-In)   WLAN Serv... TCP      Any       Any        Any              True             Any   Inbound  Allow
+...
+{D3972BB3-88... BitTorrent (UDP-In)                     UDP      Any       Any        Any              True             Any   Inbound  Allow
+Options 2 and 9 are both included in option 1 for quick reconnaissance, so you don't have to run those separately if you already used option 1 since you'll already have that information at hand.
